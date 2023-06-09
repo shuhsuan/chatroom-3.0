@@ -1,0 +1,16 @@
+{
+    "name": "Following best practices",
+    "icons": [
+        {
+        "src": "https://via.placeholder.com/192",
+        "sizes": "192x192"
+        },
+        {
+        "src": "https://via.placeholder.com/512",
+        "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "prefer_related_applications": "true"
+}
