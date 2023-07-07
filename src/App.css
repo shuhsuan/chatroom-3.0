@@ -142,3 +142,13 @@ input {
   background-color: #7cc5d9;
   font-weight: 600;
 }
+
+.correction{ 
+  position: fixed;
+  bottom: 80px;
+  width: 100vw;
+  height: 50px;
+  background-color: rgb(21, 93, 21);
+  padding: 10px;
+}
+

@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import "./navbar.css";
 
 const NavBar = () => {
   const [user] = useAuthState(auth);
@@ -16,7 +17,6 @@ const NavBar = () => {
 
   return (
     <nav className="nav-bar">
-      <h1>Chatroom</h1>
       {user ? (
         <button onClick={signOut} className="sign-out" type="button">
           Sign out

@@ -21,15 +21,15 @@ const ChatBox = () => {
       orderBy("createdAt"),
       limit(50)
     );
-    const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
+    const unsubscribe = onSnapshot(q, (QuerySnapshot) => { //onSnapshot constantly listens for any changes in the document
       let messages = [];
       QuerySnapshot.forEach((doc) => {
         messages.push({ ...doc.data(), id: doc.id });
-      });
+      }); //updates messages data when a message is sent
       setMessages(messages);
     });
     return () => unsubscribe;
-  }, []);
+  }, []); 
 
   return (
     <main className="chat-box">
