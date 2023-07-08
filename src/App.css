@@ -136,6 +136,9 @@ input, img {
   font-size: 1rem;
   border-bottom: 2px solid #a37739;
   cursor: text;
+  margin: 0 0 0 10px;
+  border-bottom-left-radius: 10px;
+  border-left: 2px solid #a37739;
 }
 .send-message > input:placeholder {
   color: #ddd;
@@ -153,6 +156,9 @@ input, img {
   font-weight: 600;
   border: none;
   border-bottom: 2px solid #a37739;
+  margin-right: 10px;
+  border-bottom-right-radius: 10px;
+  border-right: 2px solid #a37739;
 }
 
 .correction{ 
@@ -165,6 +171,9 @@ input, img {
   color: rgb(8, 44, 8);
   border-bottom: 2px dashed black;
   border-top: 2px solid #a37739;
+  margin: 0 10px 0;
+  border-top-left-radius: 10px;
+  border-left: 2px solid #a37739;
 }
 
 #grammar-butt{
@@ -178,8 +187,10 @@ input, img {
   font-weight: 600;
   color: #433c24;
   border: none;
-  margin-left: 10px;
+  margin-right: 10px;
   border-bottom: 2px dashed black;
   border-top: 2px solid #a37739;
+  border-right: 2px solid #a37739;
+  border-top-right-radius: 10px;
 }
 
