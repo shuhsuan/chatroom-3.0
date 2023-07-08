@@ -34,7 +34,11 @@ const SendMessage = ({ scroll }) => {
 
   return (
     <div>
-        <div className="correction">{correction}</div>
+        <div className="correction">
+          {correction}
+            <button id="grammar-butt" onClick={handleClick}>Check grammar</button>
+            </div>
+
       <form className="send-message" onSubmit={(event) => sendMessage(event)}>
         <input
           id="messageInput"
@@ -48,10 +52,6 @@ const SendMessage = ({ scroll }) => {
         />
         <button type="submit">Send</button>
       </form>
-
-      <div className="grammar-check">
-            <button id="grammar-butt" onClick={handleClick}>Check grammar</button>
-      </div>
     </div>
   );
 };
