@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# Chatroom    
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a chatroom with a grammar checking function you can use before sending a message. I built this app because I have overseas friends who want to practice communicating with me to get used to english grammar and its confusing intricacies. I built this app with the hopes of making that learning process a little better for them rather than have me manually correcting their grammar every so often.
 
-## Available Scripts
+I learned a lot building this project
+- How to connect to a databse using Node.js
+- How to connect to an API
+- Make a POST request and display its contents onto the page
+- How to use React components to make the project more organised
+- The existence of gitignore for hiding keys
 
-In the project directory, you can run:
+----
 
-### `npm start`
+The project is coded in Javascript and rendered with the React framework. There are 6 React components to make the project more maintainable 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Components
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### navbar.js
 
-### `npm test`
+This component handles authentication via sign-in and sign-out buttons.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The navigation bar holds the sign in and sign out buttons, it checks whether a user is signed in or not with the `useAuthState` hook. Clicking the buttons will allow the user to sign in or sign out using the Firebase Authentication SDK and `GoogleAuthProvider`. It will redirect the user to a pop up page with `signInWithRedirect` to sign in with their email address and password. This data is then saved in `auth` and the sign out function clears the auth data, returning it to null. 
 
-### `npm run build`
+### welcome.js
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This component handles the welcome page that users see upon loading the webpage if they are not logged in. There is another sign in function handled in the same way with firebase authentication hooks.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### grammarAPI.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This component creates a `POST` request to the GrammarBot Neural API on Rapid API. It sends message data which is passed through as `text` and fetches corrected `text` in return. 
 
-### `npm run eject`
+### sendMessage.js
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This component updates the database when messages are sent, handles API requests, and scrolls the browser into view.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+There is a `message` state initially set to an empty string and passed as a value to the input tag. An `onChange` function is also added to the input which sets the message state to whatever the user types in. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+There is an `onSubmit` attribute on the Send button which runs an async function called sendMessage. 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+It first checks if the user is trying to send an empty string or whitespace as a message and alerts the user. 
 
-## Learn More
+It takes the user's `uid` (Unique ID) , `displayName` (Full name), and `photoURL` from the auth data provided when they log in. `auth` is imported from the firebase configuration file. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+It then uses `addDoc()` to create a document inside a collection called `messages` in the Firebase database which is accessed via the `db` import from Firebase. It creates key-value pairs storing:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Data name | Data stored
+----------|------------
+text      | message
+name      | displayName
+createdAt | time 
+uid       | uid
 
-### Code Splitting
+This makes up the data for one document in the collection. Each message creates a document. After this, it resets the message state to an empty string. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+There is a const `scroll` passed through this component which is used at the bottom of the SendMessage function like so
 
-### Analyzing the Bundle Size
+`scroll.current.scrollIntoView({behavior: "smooth"})`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This tells the browser to let the scroll span be in view in the browser after sending a message. 
 
-### Making a Progressive Web App
+There is a `correction` state and a button which triggers a `handleClick` async function that passes the `message` data through the getGrammar function imported from getGrammarAPI.js. This creates a promise POST request and the data recieved is the corrected grammar form of `message` which is stored in `correction` and rendered onto the browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### chatBox.js
 
-### Advanced Configuration
+This component retrieves messages from the databse to display it on the screen.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+It uses a `useEffect` hook that runs anytime changes are made in the chatroom. There is a Firebase query, `q`, that qeuries the database looking for the `message` collection in the imported database `db`. It then orders the documents base on the `createdAt` key and returns a maximum of 50 documents. 
 
-### Deployment
+The `onSnapshot` function listens to changes in the document with an empty array `messages`. The `forEach` function loops through all the documents from the imported `collection` and saves the data in the new array. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+A map function renders each message/document in the messages array into the Message component.
 
-### `npm run build` fails to minify
+There is a constant called `scroll` with an imported `useRef()` hook, and a `span` element with a `ref` attribute and a value of `scroll`. The `scroll` is passed into the `sendMessage` component and mentioned above.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### message.js
+
+This component renders data passed into it onto the browser.
+
+User details are stored in a const `user` through imported hooks `useAuthState` and `auth`.
+
+The message prop is deconstructed and a CSS style is conditioned to take effect based on the uid of the message. By default, all messages are positioned left. If the message uid is the same as the uid of the person logged in, then the CSS styles stored in the selector `right` is added to th div. Otherwise, no new style is added.
+
+The message is sent and stored in the database. Then all the messages are retrieved, and the chatroom is updated with the new-messages in real-time.
+
+----
+
+Thank you for viewing my project :)
+
+
+
+
