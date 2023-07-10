@@ -17,13 +17,21 @@ The project is coded in Javascript and rendered with the React framework. There 
 
 ### navbar.js
 
+This component handles authentication via sign-in and sign-out buttons.
+
 The navigation bar holds the sign in and sign out buttons, it checks whether a user is signed in or not with the `useAuthState` hook. Clicking the buttons will allow the user to sign in or sign out using the Firebase Authentication SDK and `GoogleAuthProvider`. It will redirect the user to a pop up page with `signInWithRedirect` to sign in with their email address and password. This data is then saved in `auth` and the sign out function clears the auth data, returning it to null. 
 
 ### welcome.js
 
-This handles the welcome page that users see upon loading the webpage if they are not logged in. There is another sign in function handled in the same way with firebase authentication hooks.
+This component handles the welcome page that users see upon loading the webpage if they are not logged in. There is another sign in function handled in the same way with firebase authentication hooks.
+
+### grammarAPI.js
+
+This component creates a `POST` request to the GrammarBot Neural API on Rapid API. It sends message data which is passed through as `text` and fetches corrected `text` in return. 
 
 ### sendMessage.js
+
+This component updates the database when messages are sent, handles API requests, and scrolls the browser into view.
 
 There is a `message` state initially set to an empty string and passed as a value to the input tag. An `onChange` function is also added to the input which sets the message state to whatever the user types in. 
 
@@ -50,6 +58,8 @@ There is a const `scroll` passed through this component which is used at the bot
 
 This tells the browser to let the scroll span be in view in the browser after sending a message. 
 
+There is a `correction` state and a button which triggers a `handleClick` async function that passes the `message` data through the getGrammar function imported from getGrammarAPI.js. This creates a promise POST request and the data recieved is the corrected grammar form of `message` which is stored in `correction` and rendered onto the browser.
+
 ### chatBox.js
 
 This component retrieves messages from the databse to display it on the screen.
@@ -72,8 +82,9 @@ The message prop is deconstructed and a CSS style is conditioned to take effect 
 
 The message is sent and stored in the database. Then all the messages are retrieved, and the chatroom is updated with the new-messages in real-time.
 
+----
 
-
+Thank you for viewing my project :)
 
 
 
