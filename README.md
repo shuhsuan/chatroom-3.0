@@ -3,11 +3,11 @@
 This is a chatroom with a grammar checking function you can use before sending a message. I built this app because I have overseas friends who want to practice communicating with me to get used to english grammar and its confusing intricacies. I built this app with the hopes of making that learning process a little better for them rather than have me manually correcting their grammar every so often.
 
 I learned a lot building this project
-- How to connect to a databse using Node.js
-- How to connect to an API
-- Make a POST request and display its contents onto the page
+- How to connect to a databse, read, update, and render its documents
+- How to connect to an API, make requests and handle the response
 - How to use React components to make the project more organised
 - The existence of gitignore for hiding keys
+- User authentication and storing data
 
 ----
 
@@ -84,7 +84,10 @@ The message is sent and stored in the database. Then all the messages are retrie
 
 ----
 
-Thank you for viewing my project :)
+### Features yet to be added
+
+- Hoping to delete document data in the database if I upgrade the Firebase account to a "blaze" subscription. 
+
 
 
 
